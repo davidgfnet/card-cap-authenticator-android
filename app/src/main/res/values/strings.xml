@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Bank Chip Authentication Program</string>
+    <string name="error_dialog_title">Error</string>
+    <string name="ok">OK</string>
+    <string name="tab_calculation">Calculation</string>
+    <string name="tab_advanced">Advanced</string>
+    <string name="log_title">Debug log</string>
+    <string name="pin_title">Pin code</string>
+    <string name="pin_hint">1234</string>
+    <string name="challenge_hint">9999999999</string>
+    <string name="calculate_button_text">Calculate</string>
+    <string name="challenge_title">Challenge</string>
 </resources>
