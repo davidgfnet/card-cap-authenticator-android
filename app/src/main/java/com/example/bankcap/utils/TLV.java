@@ -1,4 +1,4 @@
-package com.example.bankcap;
+package com.example.bankcap.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
@@ -74,7 +74,7 @@ public class TLV {
                 int blen = 0;
                 for (int j = 0; j < (len & 127); j++) {
                     blen = blen << 8;
-                    blen = (int) (cdol1[i++] & 0xFF);
+                    blen |= (int) (cdol1[i++] & 0xFF);
                 }
                 len = blen;
             }
@@ -102,7 +102,6 @@ public class TLV {
 
         return msg;
     }
-
 
     private HashMap<Integer, byte[]> tlist;
 }

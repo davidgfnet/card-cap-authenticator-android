@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="activity_padding">16.0dip</dimen>
+    <dimen name="title_size">16.0sp</dimen>
+    <dimen name="text_size">14.0sp</dimen>
+</resources>
