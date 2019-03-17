@@ -75,8 +75,12 @@ public class CalculationFragment extends Fragment {
         calculateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                writeLog("Button pressed");
-                calculate(pinEditText.getText().toString(), challengeEditText.getText().toString());
+                String pin = pinEditText.getText().toString();
+                String chl = challengeEditText.getText().toString();
+                if (pin.isEmpty() || chl.isEmpty())
+                    showErrorDialog("Please fill PIN and Challenge");
+                else
+                    calculate(Integer.parseInt(pin), Integer.parseInt(chl));
             }
         });
         writeLog("CalculationFragment's view created");
@@ -86,7 +90,7 @@ public class CalculationFragment extends Fragment {
         return viewGroup;
     }
 
-    private void calculate(String pin, String challenge) {
+    private void calculate(int pcode, int challenge) {
         UsbManager manager = (UsbManager) getContext().getSystemService(Context.USB_SERVICE);
         UsbDeviceConnection conn = manager.openDevice(dev_);
         if (conn != null) {
@@ -174,8 +178,8 @@ public class CalculationFragment extends Fragment {
         // generation.
         obj = new TLV(java.util.Arrays.copyOfRange(response2, 0, rsize - 2));
         TLV emv = new TLV(obj.get(0x70));
-        byte[] chreq1 = TLV.createDOL(emv.get(0x8C), 1, Integer.parseInt(challenge));
-        //byte[] chreq2 = TLV.createDOL(emv.get(0x8D), 2, Integer.parseInt(challenge));
+        byte[] chreq1 = TLV.createDOL(emv.get(0x8C), 1, challenge);
+        byte[] chreq2 = TLV.createDOL(emv.get(0x8D), 2, challenge);
         byte[] filtmsg = emv.get(0x9F56);
 
         // Reads the PIN counter here
@@ -198,7 +202,6 @@ public class CalculationFragment extends Fragment {
         writeLog("Card has " + Integer.toString(response2[3]) + " PIN attempts");
 
         // Authenticate card via PIN number
-        int pcode = Integer.parseInt(pin);
         byte[] authmsg = new byte[13];
         authmsg[1] = 32;
         authmsg[3] = (byte) 128;
