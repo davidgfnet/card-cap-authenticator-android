@@ -1,4 +1,4 @@
-package com.example.bankcap.utils;
+package net.davidgf.bankcap.utils;
 
 public class HexUtils {
 

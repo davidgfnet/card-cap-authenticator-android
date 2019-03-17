@@ -1,4 +1,4 @@
-package com.example.bankcap.interfaces;
+package net.davidgf.bankcap.interfaces;
 
 public interface ILogCallback {
     void writeLogString(String content);

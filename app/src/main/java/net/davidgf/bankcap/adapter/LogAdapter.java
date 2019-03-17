@@ -1,4 +1,4 @@
-package com.example.bankcap.adapter;
+package net.davidgf.bankcap.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.bankcap.R;
+import net.davidgf.bankcap.R;
 
 import java.util.LinkedList;
 

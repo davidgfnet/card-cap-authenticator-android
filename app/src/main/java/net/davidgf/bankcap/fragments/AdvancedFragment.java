@@ -1,13 +1,13 @@
-package com.example.bankcap.fragments;
+package net.davidgf.bankcap.fragments;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bankcap.R;
-import com.example.bankcap.adapter.LogAdapter;
-import com.example.bankcap.interfaces.ILogCallback;
+import net.davidgf.bankcap.R;
+import net.davidgf.bankcap.adapter.LogAdapter;
+import net.davidgf.bankcap.interfaces.ILogCallback;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;

@@ -1,4 +1,4 @@
-package com.example.bankcap.fragments;
+package net.davidgf.bankcap.fragments;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -18,10 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.bankcap.R;
-import com.example.bankcap.activities.CalculationActivity;
-import com.example.bankcap.utils.HexUtils;
-import com.example.bankcap.utils.TLV;
+import net.davidgf.bankcap.R;
+import net.davidgf.bankcap.activities.CalculationActivity;
+import net.davidgf.bankcap.utils.HexUtils;
+import net.davidgf.bankcap.utils.TLV;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;

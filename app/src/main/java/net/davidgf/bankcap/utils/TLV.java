@@ -1,4 +1,4 @@
-package com.example.bankcap.utils;
+package net.davidgf.bankcap.utils;
 
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;

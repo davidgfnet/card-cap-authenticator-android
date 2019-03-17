@@ -1,4 +1,4 @@
-package com.example.bankcap;
+package net.davidgf.bankcap;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;

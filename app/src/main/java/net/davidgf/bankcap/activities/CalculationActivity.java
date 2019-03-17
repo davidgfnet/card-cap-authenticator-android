@@ -1,11 +1,11 @@
-package com.example.bankcap.activities;
+package net.davidgf.bankcap.activities;
 
 import android.os.Bundle;
 
-import com.example.bankcap.BaseActivity;
-import com.example.bankcap.R;
-import com.example.bankcap.fragments.AdvancedFragment;
-import com.example.bankcap.fragments.CalculationFragment;
+import net.davidgf.bankcap.BaseActivity;
+import net.davidgf.bankcap.R;
+import net.davidgf.bankcap.fragments.AdvancedFragment;
+import net.davidgf.bankcap.fragments.CalculationFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.appcompat.widget.Toolbar;
