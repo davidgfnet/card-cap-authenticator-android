@@ -101,17 +101,40 @@ public class CalculationFragment extends Fragment {
             showErrorDialog("Could not connect to the USB device");
             return;
         }
+        byte[] response = new byte[512];
 
         // OK we've got the two relevant EPs to communicate with the device.
-        byte[] response = new byte[512];
-        byte[] imsg = ccidMsg(0x62, new byte[0]);
-        if (conn.bulkTransfer(outep_, imsg, imsg.length, 5000) <= 0) {
-            showErrorDialog("Error while sending reset command");
+        byte[] getslot = ccidMsg(0x65, 0, new byte[0]);
+        if (conn.bulkTransfer(outep_, getslot, getslot.length, 5000) <= 0) {
+            showErrorDialog("Error while sending getSLOT command");
             return;
         }
         int received = conn.bulkTransfer(inep_, response, response.length, 5000);
         if (received <= 0) {
+            showErrorDialog("Error while receiving getSLOT");
+            return;
+        }
+
+        // OK we've got the two relevant EPs to communicate with the device.
+        byte[] imsg = ccidMsg(0x62, 1, new byte[0]);
+        if (conn.bulkTransfer(outep_, imsg, imsg.length, 5000) <= 0) {
+            showErrorDialog("Error while sending reset command");
+            return;
+        }
+        received = conn.bulkTransfer(inep_, response, response.length, 5000);
+        if (received <= 0) {
             showErrorDialog("Error while receiving ATR");
+            return;
+        }
+
+        // Again
+        if (conn.bulkTransfer(outep_, getslot, getslot.length, 5000) <= 0) {
+            showErrorDialog("Error while sending getSLOT command");
+            return;
+        }
+        received = conn.bulkTransfer(inep_, response, response.length, 5000);
+        if (received <= 0) {
+            showErrorDialog("Error while receiving getSLOT");
             return;
         }
 
@@ -322,7 +345,7 @@ public class CalculationFragment extends Fragment {
         }
     }
 
-    private byte[] ccidMsg(int msgType, byte[] edata) {
+    private byte[] ccidMsg(int msgType, int lc, byte[] edata) {
         byte[] msg = new byte[10 + edata.length];
         msg[0] = (byte) msgType;
         msg[1] = (byte) edata.length;
@@ -331,7 +354,7 @@ public class CalculationFragment extends Fragment {
         msg[4] = (byte) (edata.length >> 24);
         msg[5] = 0; // slotn
         msg[6] = (byte) req_counter++; // seqn
-        msg[7] = 0; // Lc
+        msg[7] = (byte)lc; // Lc
         msg[8] = 0;
         msg[9] = 0;
 
@@ -341,7 +364,7 @@ public class CalculationFragment extends Fragment {
     }
 
     private byte[] sendAPDU(UsbDeviceConnection conn, byte[] pload) {
-        byte[] imsg = ccidMsg(0x6F, pload);
+        byte[] imsg = ccidMsg(0x6F, 0, pload);
         if (conn.bulkTransfer(outep_, imsg, imsg.length, 5000) <= 0) {
             showErrorDialog("Error while sending APDU");
             return new byte[0];
