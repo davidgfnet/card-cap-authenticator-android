@@ -80,7 +80,7 @@ public class CalculationFragment extends Fragment {
                 if (pin.isEmpty() || chl.isEmpty())
                     showErrorDialog("Please fill PIN and Challenge");
                 else
-                    calculate(Integer.parseInt(pin), Integer.parseInt(chl));
+                    calculate(pin, Integer.parseInt(chl));
             }
         });
         writeLog("CalculationFragment's view created");
@@ -90,7 +90,7 @@ public class CalculationFragment extends Fragment {
         return viewGroup;
     }
 
-    private void calculate(int pcode, int challenge) {
+    private void calculate(String pcode, int challenge) {
         UsbManager manager = (UsbManager) getContext().getSystemService(Context.USB_SERVICE);
         UsbDeviceConnection conn = manager.openDevice(dev_);
         if (conn != null) {
@@ -206,11 +206,13 @@ public class CalculationFragment extends Fragment {
         authmsg[1] = 32;
         authmsg[3] = (byte) 128;
         authmsg[4] = 8;
-        authmsg[5] = 36;
-        authmsg[6] = (byte) (((pcode / 1000) << 4) | ((pcode / 100) % 10));
-        authmsg[7] = (byte) ((((pcode / 10) % 10) << 4) | (pcode % 10));
-        for (int i = 8; i < 13; i++)
-            authmsg[i] = (byte) 0xff;
+        authmsg[5] = (byte) (0x20 + pcode.length());
+        StringBuilder suffix = new StringBuilder(pcode);
+        while (suffix.length() < 14)
+            suffix.append("F");
+        for (int i = 0; i < 7; i++) {
+            authmsg[i + 6] = (byte) Integer.parseInt(suffix.substring(2 * i, 2 * i + 2), 16);
+        }
 
         response = sendAPDU(conn, authmsg);
         if (response.length != 2 || response[0] != (byte) 0x90 || response[1] != 0) {
