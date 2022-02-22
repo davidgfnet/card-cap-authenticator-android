@@ -136,7 +136,12 @@ public class CalculationFragment extends Fragment {
         TLV fci = new TLV(obj.get(0x6F));
         TLV fcip = new TLV(fci.get(0xA5));
 
-        byte[] postfid = "PostFinance ID".getBytes(StandardCharsets.US_ASCII);
+        byte[] postfid;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+            postfid = "PostFinance ID".getBytes(StandardCharsets.US_ASCII);
+        } else {
+            postfid = "PostFinance ID".getBytes();
+        }
         if (!java.util.Arrays.equals(fcip.get(0x50), postfid)) {
             showErrorDialog("The card does not look like a PostFinance Card");
             return;
