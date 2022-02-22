@@ -266,7 +266,9 @@ public class CalculationFragment extends Fragment {
         }
         writeLog("DATA: " + HexUtils.bytesToHex(srdata));
         writeLog("FILT: " + HexUtils.bytesToHex(filtmsg));
-        writeLog("Calculated OTP " + Integer.toString(otpn));
+        writeLog("Calculated OTP " + otpn);
+
+        showErrorDialog("Calculated OTP " + otpn);
 
         /*
         // This is needed for MODE 2?
